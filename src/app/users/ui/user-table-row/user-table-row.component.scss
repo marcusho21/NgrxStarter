@@ -1,0 +1,11 @@
+td {
+  width: max-content;
+  text-wrap: nowrap;
+  padding: var(--size-2);
+}
+
+.form-action-group {
+  display: flex;
+  place-content: center;
+  column-gap: var(--size-2);
+}

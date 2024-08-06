@@ -1,0 +1,27 @@
+@if(isEditing()) {
+<label class="editable-cell">
+  <input
+    [focusOnEdit]="focusOnEdit()"
+    [formControl]="control()"
+    [attr.id]="inputId()"
+    [attr.form]="formId()"
+    [attr.name]="name()"
+    [attr.type]="type()"
+    [attr.aria-errormessage]="inputId() + '-error-message'"
+    [attr.aria-invalid]="control().invalid"
+  />
+  <span
+    [attr.id]="inputId() + '-error-message'"
+    role="alert"
+    aria-live="assertive"
+  >
+    <ng-content select="[error-message]"></ng-content>
+  </span>
+  <!-- display the value when input is hidden -->
+  @if (type() === 'hidden') {
+  <span>{{ value() }}</span>
+  }
+</label>
+} @else {
+<span>{{ value() }}</span>
+}

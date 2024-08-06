@@ -1,0 +1,40 @@
+<!-- screen reader ONLY detect the content change of a role alert or role status element-->
+<!-- !DO NOT programmatically change role or aria-live -->
+<p class="status-message error" role="alert" aria-live="assertive">
+  @if (status() === 'error') {
+  {{ message() }}
+  }
+</p>
+
+<!-- !DO NOT programmatically change role or aria-live -->
+<p class="status-message success" role="status" aria-live="polite">
+  @if (status() === 'success') {
+  {{ message() }}
+  }
+</p>
+
+@if (isLoading()) {
+<app-loader></app-loader>
+} @else {
+<table (clickOutside)="onClickOutside()">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Name</th>
+      <th>User name</th>
+      <th>Email</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    @for (user of users(); track user.id) {
+    <tr
+      app-user-table-row
+      [user]="user"
+      (editing)="onEditing($event)"
+      (saveUser)="onSaveUser($event)"
+    ></tr>
+    }
+  </tbody>
+</table>
+}

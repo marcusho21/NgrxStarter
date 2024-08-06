@@ -1,1 +1,13 @@
-/* You can add global styles to this file, and also import other style files */
+@import "open-props/style";
+@import "open-props/normalize";
+@import "open-props/buttons";
+
+html {
+  font-family: var(--font-mono);
+
+  --link: var(--orange-4);
+  --link-visited: var(--orange-6);
+  --color-primary: var(--orange-4);
+  --color-success: var(--blue-4);
+  --color-error: var(--red-7);
+}

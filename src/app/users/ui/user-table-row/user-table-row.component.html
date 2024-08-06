@@ -1,0 +1,71 @@
+@if (user(); as user) {
+<td
+  editable-cell
+  [control]="id"
+  [isEditing]="isEditing()"
+  [formId]="formId()"
+  name="id"
+  type="hidden"
+  [value]="user.id"
+></td>
+
+<td
+  editable-cell
+  [control]="name"
+  [isEditing]="isEditing()"
+  [formId]="formId()"
+  name="name"
+  [value]="user.name"
+  [focusOnEdit]="isEditing()"
+>
+  <ng-container error-message>
+    {{ name.getError("required") ? "Name is required" : "" }}
+  </ng-container>
+</td>
+
+<td
+  editable-cell
+  [control]="username"
+  [isEditing]="isEditing()"
+  [formId]="formId()"
+  name="username"
+  [value]="user.username"
+>
+  <ng-container error-message>
+    {{ username.getError("required") ? "User name is required" : "" }}
+  </ng-container>
+</td>
+
+<td
+  editable-cell
+  [control]="email"
+  [isEditing]="isEditing()"
+  [formId]="formId()"
+  name="email"
+  [value]="user.email"
+>
+  <ng-container error-message>
+    @if (email.getError("required")) {
+    {{ "Email is required" }}
+    } @else if (email.getError("email")) {
+    {{ "Email is invalid" }}
+    } @else {
+    {{ "" }}
+    }
+  </ng-container>
+</td>
+
+<td>
+  <div class="form-action-group">
+    <button type="button" (click)="isEditing() ? onCancel() : onEdit()">
+      {{ isEditing() ? "Cancel" : "Edit" }}
+    </button>
+
+    @if (isEditing()) {
+    <form [id]="formId()" [formGroup]="userForm" (ngSubmit)="onSubmit()">
+      <button type="submit" [disabled]="userForm.invalid">Save</button>
+    </form>
+    }
+  </div>
+</td>
+}

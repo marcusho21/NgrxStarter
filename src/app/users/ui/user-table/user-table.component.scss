@@ -1,0 +1,25 @@
+:host {
+  display: grid;
+  place-items: center;
+  overflow-x: auto;
+  margin: var(--size-3);
+
+  .status-message {
+    &:not(:empty) {
+      padding: var(--size-4);
+    }
+
+    &.error {
+      color: var(--color-error);
+    }
+
+    &.success {
+      color: var(--color-success);
+    }
+  }
+
+  table {
+    width: 100%;
+    font-size: var(--font-size-2);
+  }
+}

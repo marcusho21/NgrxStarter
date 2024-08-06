@@ -1,0 +1,15 @@
+.editable-cell {
+  display: grid;
+  row-gap: var(--size-1);
+  text-align: start;
+
+  [role="alert"] {
+    display: contents;
+    color: var(--color-error);
+    justify-self: flex-start;
+  }
+
+  input[aria-invalid="true"] {
+    border: var(--border-size-2) solid var(--color-error);
+  }
+}
