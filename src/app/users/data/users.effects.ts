@@ -42,3 +42,29 @@ export const update$ = createEffect(
     ),
   { functional: true }
 );
+
+export const updateAll$ = createEffect(
+  (actions = inject(Actions), usersServive = inject(UsersService)) =>
+    actions.pipe(
+      ofType(usersActions.updateAll),
+      switchMap(({ users }) => {
+        const updatedUseres = Object.values(users);
+        console.log(updatedUseres);
+        return usersServive
+          .updateAllUser(updatedUseres)
+          .pipe(
+            map((users) =>
+              usersActions.updatedAll({
+                users,
+                message: 'All users have been updated',
+              })
+            )
+          );
+      }),
+      catchError((error) => {
+        console.error(error);
+        return of(usersActions.error({ message: 'Update failed' }));
+      })
+    ),
+  { functional: true }
+);

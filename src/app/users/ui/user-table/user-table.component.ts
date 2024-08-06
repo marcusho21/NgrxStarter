@@ -34,6 +34,9 @@ export class UserTableComponent {
   message = computed(() => this.#statusMessage()?.message);
   isLoading = toSignal(this.#userFacade.isLoading$);
   tableRowsRef = viewChildren(UserTableRowComponent);
+  usersFormData = computed(() =>
+    this.tableRowsRef().map((row) => row.userForm.getRawValue())
+  );
 
   onEditing(isEditing: boolean) {
     if (isEditing) {
@@ -46,6 +49,16 @@ export class UserTableComponent {
   }
 
   onClickOutside() {
+    this.tableRowsRef().forEach((row) => row.isEditing.set(false));
+  }
+
+  onEditAll() {
+    this.tableRowsRef().forEach((row) => row.isEditing.set(true));
+  }
+
+  onSaveAll() {
+    const usersData = this.usersFormData();
+    this.#userFacade.saveAll(usersData);
     this.tableRowsRef().forEach((row) => row.isEditing.set(false));
   }
 }

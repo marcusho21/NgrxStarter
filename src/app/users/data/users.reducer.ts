@@ -7,6 +7,7 @@ type UsersActionState =
   | { type: 'init' } // This is the initial state, use before any action is dispatched
   | { type: 'loading' } // loading state, use when loading users
   | { type: 'updating' } // updating state, use when updating a user
+  | { type: 'updatingAll' } // updating state, use when updating a user
   | { type: 'success' } // success state, use on action success without message
   | { type: 'success'; message: string } // success state, use action is successful with message
   | { type: 'error'; message: string }; // error state, use when action fails
@@ -50,7 +51,17 @@ export const usersFeature = createFeature({
     on(usersActions.clearStatusMessage, (state) => ({
       ...state,
       actionState: { type: 'success' } as const,
-    }))
+    })),
+    on(usersActions.updateAll, (state) => ({
+      ...state,
+      actionState: { type: 'updatingAll' } as const,
+    })),
+    on(usersActions.updatedAll, (state, { users, message }) =>
+      adapter.setMany(users, {
+        ...state,
+        actionState: { type: 'success', message } as const,
+      })
+    )
   ),
   extraSelectors: ({ selectUsersState, selectActionState }) => ({
     ...adapter.getSelectors(selectUsersState),

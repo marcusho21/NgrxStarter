@@ -36,4 +36,8 @@ export class UsersFacade {
   clearMessage() {
     this.#store.dispatch(usersActions.clearStatusMessage());
   }
+
+  saveAll(users: User[]) {
+    this.#store.dispatch(usersActions.updateAll({ users }));
+  }
 }
